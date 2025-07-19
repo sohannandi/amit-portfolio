@@ -280,3 +280,34 @@ function validateEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
+
+// Simple Netlify Forms handling
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.querySelector('form[name="contact"]');
+    
+    if (contactForm) {
+        contactForm.addEventListener("submit", function(e) {
+            let name = document.getElementById("name");
+            let email = document.getElementById("email");
+            let msg = document.getElementById("msg");
+            
+            // Basic validation
+            if(name.value.trim() === "" || email.value.trim() === "" || msg.value.trim() === ""){
+                e.preventDefault();
+                alert("Please fill in all fields");
+                return false;
+            }
+            
+            if(msg.value.trim().length < 5) {
+                e.preventDefault();
+                alert("Please enter a message with at least 5 characters");
+                return false;
+            }
+            
+            // Show success message and let form submit to Netlify
+            setTimeout(() => {
+                alert(`Thanks ${name.value}! Your message has been sent successfully. I'll get back to you soon!`);
+            }, 100);
+        });
+    }
+});
