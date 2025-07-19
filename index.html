@@ -125,10 +125,16 @@
                 <h1>Contact US</h1>
             </div>
             <div class="contact">
-                <input type="text" placeholder="Enter Your Name" id="name">
-                <input type="text" placeholder="Enter Your Email" id="email">
-                <textarea name="" id="msg" cols="40" rows="6" value="" placeholder="Enter Massage......"></textarea>
-                <button id="submit">Submit</button>
+                <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact">
+                    <p style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
+                    <input type="text" name="name" placeholder="Enter Your Name" id="name" required>
+                    <input type="email" name="email" placeholder="Enter Your Email" id="email" required>
+                    <textarea name="message" id="msg" cols="40" rows="6" placeholder="Enter Message......" required></textarea>
+                    <button type="submit" id="submit">Submit</button>
+                </form>
             </div>
         </div>
         <div class="footer">
