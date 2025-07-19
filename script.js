@@ -1,7 +1,8 @@
 let btns = document.querySelectorAll(".btn");
-let submit = document.getElementById("submit");
 let mobileMenu = document.getElementById("bar");
 let navMenu = document.querySelector("nav ul");
+
+// Service filter buttons functionality
 btns.forEach(function (buttons) {
     buttons.addEventListener("click", function () {
         console.log(buttons.attributes.id.value);
@@ -28,8 +29,8 @@ btns.forEach(function (buttons) {
     })
 })
 
+// CV Download functionality
 function downloadBtn() {
-    // Direct download of the PDF file
     const link = document.createElement('a');
     link.href = '/Amit-Resume-21.pdf';
     link.download = 'Amit_Das_CV.pdf';
@@ -38,7 +39,6 @@ function downloadBtn() {
     document.body.removeChild(link);
     alert("CV Downloaded Successfully!");
 }
-// Contact form submission (removed duplicate - using enhanced version below)
 
 // Mobile menu toggle functionality
 mobileMenu.addEventListener("click", function () {
@@ -66,79 +66,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
-});
-
-// Form validation improvements
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Add loading state to submit button
-function setLoadingState(isLoading) {
-    const submitBtn = document.getElementById("submit");
-    if (isLoading) {
-        submitBtn.textContent = "Sending...";
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = "0.7";
-    } else {
-        submitBtn.textContent = "Submit";
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = "1";
-    }
-}
-
-// Enhanced contact form submission
-submit.addEventListener("click", function () {
-    let name = document.getElementById("name");
-    let email = document.getElementById("email");
-    let msg = document.getElementById("msg");
-
-    // Validation
-    if (name.value.trim() === "" || email.value.trim() === "" || msg.value.trim() === "") {
-        alert("Please fill in all fields");
-        return;
-    }
-
-    if (!validateEmail(email.value.trim())) {
-        alert("Please enter a valid email address");
-        return;
-    }
-
-    if (msg.value.trim().length < 10) {
-        alert("Please enter a message with at least 10 characters");
-        return;
-    }
-
-    setLoadingState(true);
-
-    // Send contact form data to backend
-    const contactData = {
-        name: name.value.trim(),
-        email: email.value.trim(),
-        message: msg.value.trim()
-    };
-
-    setLoadingState(false);
-
-    // Simple contact form solution - show contact info
-    alert(`Thanks for reaching out, ${name.value}! 
-    
-I'd love to connect with you. Here's how you can reach me:
-
-📧 Email: amitdas9718@gmail.com
-💼 LinkedIn: linkedin.com/in/amit-das-dev
-🐙 GitHub: github.com/Amit9718
-📱 Phone: +91-XXXXXXXXXX
-
-Your message: "${msg.value.trim().substring(0, 100)}${msg.value.trim().length > 100 ? '...' : ''}"
-
-I'll get back to you as soon as possible!`);
-
-    // Clear the form
-    name.value = "";
-    email.value = "";
-    msg.value = "";
 });
 
 // Add scroll-to-top functionality
@@ -179,135 +106,6 @@ window.addEventListener('scroll', function () {
         }
     }
 });
-// Enhanc
-ed contact form submission with Netlify Forms
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.querySelector('form[name="contact"]');
-    const submitBtn = document.getElementById("submit");
-    
-    if (contactForm) {
-        contactForm.addEventListener("submit", function(e) {
-            e.preventDefault(); // Prevent default form submission
-            
-            let name = document.getElementById("name");
-            let email = document.getElementById("email");
-            let msg = document.getElementById("msg");
-            
-            // Validation
-            if(name.value.trim() === "" || email.value.trim() === "" || msg.value.trim() === ""){
-                alert("Please fill in all fields");
-                return;
-            }
-            
-            if(!validateEmail(email.value.trim())) {
-                alert("Please enter a valid email address");
-                return;
-            }
-            
-            if(msg.value.trim().length < 10) {
-                alert("Please enter a message with at least 10 characters");
-                return;
-            }
-            
-            // Set loading state
-            if(submitBtn) {
-                submitBtn.textContent = "Sending...";
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = "0.7";
-            }
-            
-            // Submit form data to Netlify
-            const formData = new FormData(contactForm);
-            
-            fetch("/", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                // Reset button state
-                if(submitBtn) {
-                    submitBtn.textContent = "Submit";
-                    submitBtn.disabled = false;
-                    submitBtn.style.opacity = "1";
-                }
-                
-                alert(`Thanks for reaching out, ${name.value}! 
 
-Your message has been sent successfully. I'll get back to you as soon as possible!
-
-📧 You can also reach me directly at: amitdas9718@gmail.com
-💼 LinkedIn: linkedin.com/in/amit-das-dev
-🐙 GitHub: github.com/Amit9718`);
-                
-                // Clear the form
-                name.value = "";
-                email.value = "";
-                msg.value = "";
-            })
-            .catch((error) => {
-                // Reset button state
-                if(submitBtn) {
-                    submitBtn.textContent = "Submit";
-                    submitBtn.disabled = false;
-                    submitBtn.style.opacity = "1";
-                }
-                
-                console.error('Error:', error);
-                alert(`Thanks for reaching out, ${name.value}! 
-
-There was an issue sending your message, but here's how you can reach me directly:
-
-📧 Email: amitdas9718@gmail.com
-💼 LinkedIn: linkedin.com/in/amit-das-dev
-🐙 GitHub: github.com/Amit9718
-
-Your message: "${msg.value.trim().substring(0, 100)}${msg.value.trim().length > 100 ? '...' : ''}"
-
-I'll get back to you as soon as possible!`);
-                
-                // Clear the form
-                name.value = "";
-                email.value = "";
-                msg.value = "";
-            });
-        });
-    }
-});
-
-// Email validation function (if not already defined)
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Simple Netlify Forms handling
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.querySelector('form[name="contact"]');
-    
-    if (contactForm) {
-        contactForm.addEventListener("submit", function(e) {
-            let name = document.getElementById("name");
-            let email = document.getElementById("email");
-            let msg = document.getElementById("msg");
-            
-            // Basic validation
-            if(name.value.trim() === "" || email.value.trim() === "" || msg.value.trim() === ""){
-                e.preventDefault();
-                alert("Please fill in all fields");
-                return false;
-            }
-            
-            if(msg.value.trim().length < 5) {
-                e.preventDefault();
-                alert("Please enter a message with at least 5 characters");
-                return false;
-            }
-            
-            // Show success message and let form submit to Netlify
-            setTimeout(() => {
-                alert(`Thanks ${name.value}! Your message has been sent successfully. I'll get back to you soon!`);
-            }, 100);
-        });
-    }
-});
+// Contact form - Let Netlify handle it naturally (no JavaScript interference)
+// The form will submit directly to Netlify with data-netlify="true"
